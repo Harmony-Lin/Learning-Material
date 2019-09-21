@@ -1,0 +1,215 @@
+简介
+string .h 头文件定义了一个变量类型、一个宏和各种操作字符数组的函数。
+
+库变量
+
+下面是头文件 string.h 中定义的变量类型：
+序号	变量 & 描述
+1	size_t 
+	这是无符号整数类型，它是 sizeof 关键字的结果。
+
+库宏
+下面是头文件 string.h 中定义的宏：
+序号	宏 & 描述
+1	NULL
+	这个宏是一个空指针常量的值。
+
+库函数
+下面是头文件 string.h 中定义的函数：
+
+序号	函数 & 描述
+1	void *memchr(const void *str, int c, size_t n)
+	在参数 str 所指向的字符串的前 n 个字节中搜索第一次出现字符 c（一个无符号字符）的位置。
+2	int memcmp(const void *str1, const void *str2, size_t n)
+	把 str1 和 str2 的前 n 个字节进行比较。
+3	void *memcpy(void *dest, const void *src, size_t n)
+	从 src 复制 n 个字符到 dest。
+4	void *memmove(void *dest, const void *src, size_t n)
+	另一个用于从 src 复制 n 个字符到 dest 的函数。
+5	void *memset(void *str, int c, size_t n)
+	复制字符 c（一个无符号字符）到参数 str 所指向的字符串的前 n 个字符。
+6	char *strcat(char *dest, const char *src)
+	把 src 所指向的字符串追加到 dest 所指向的字符串的结尾。
+7	char *strncat(char *dest, const char *src, size_t n)
+	把 src 所指向的字符串追加到 dest 所指向的字符串的结尾，直到 n 	字符长度为止。
+8	char *strchr(const char *str, int c)
+	在参数 str 所指向的字符串中搜索第一次出现字符 c（一个无符号字符）的位置。
+9	int strcmp(const char *str1, const char *str2)
+	把 str1 所指向的字符串和 str2 所指向的字符串进行比较。
+10	int strncmp(const char *str1, const char *str2, size_t n)
+	把 str1 和 str2 进行比较，最多比较前 n 个字节。
+11	int strcoll(const char *str1, const char *str2)
+	把 str1 和 str2 进行比较，结果取决于 LC_COLLATE 的位置设置。
+12	char *strcpy(char *dest, const char *src)
+	把 src 所指向的字符串复制到 dest。
+13	char *strncpy(char *dest, const char *src, size_t n)
+	把 src 所指向的字符串复制到 dest，最多复制 n 个字符。
+14	size_t strcspn(const char *str1, const char *str2)
+	检索字符串 str1 开头连续有几个字符都不含字符串 str2 中的字符。
+15	char *strerror(int errnum)
+	从内部数组中搜索错误号 errnum，并返回一个指向错误消息字符串的指针。
+16	size_t strlen(const char *str)
+	计算字符串 str 的长度，直到空结束字符，但不包括空结束字符。
+17	char *strpbrk(const char *str1, const char *str2)
+	检索字符串 str1 中第一个匹配字符串 str2 中字符的字符，不包含空结束字符。也就是说，依次检验字符串 str1 中的字符，当被检验字符在字符串 str2 中也包含时，则停止检验，并返回该字符位置。
+18	char *strrchr(const char *str, int c)
+	在参数 str 所指向的字符串中搜索最后一次出现字符 c（一个无符号字符）的位置。
+19	size_t strspn(const char *str1, const char *str2)
+	检索字符串 str1 中第一个不在字符串 str2 中出现的字符下标。
+20	char *strstr(const char *haystack, const char *needle)
+	在字符串 haystack 中查找第一次出现字符串 needle（不包含空结束字符）的位置。
+21	char *strtok(char *str, const char *delim)
+	分解字符串 str 为一组字符串，delim 为分隔符。
+22	size_t strxfrm(char *dest, const char *src, size_t n)
+	根据程序当前的区域选项中的 LC_COLLATE 来转换字符串 src 的前 n 个字符，并把它们放置在字符串 dest 中。
+
+
+
+在ACM中主要用到string的这几个功能：赋值，添加，删除，替换，查找，比较，反向排序。
+
+1.赋值
+
+　　直接来就行：
+
+　　string ss;
+
+　　ss="aaa";
+
+　　或者
+
+　　string sa,sb;
+
+　　cin>>sa;
+
+　　sb=sa;
+
+2.添加
+
+　　在末尾加字符或字符串直接用加号：
+
+　　string ss;
+
+　　ss+='a';
+
+　　ss+="aaa";
+
+　　在中间插入一个字符用ss.insert()函数：
+
+　　ss.insert(ss.begin()+1,'a');//在ss[1]之前插入字符a
+
+　　在中间插入一个字符串可以用替换函数ss.replace()
+
+　　ss.replace(2,0,"aaa");//从第二个字符开始将连续0个元素替换为aaa（就是将aaa插入到了第二个字符前面了）
+
+3.删除
+
+　　给ss赋空值ss=""就是把整个字符串清空了。
+
+　　用ss.erase()删除掉迭代器所指的一个或一个区间内（左闭右开）的元素。
+
+　　string::iterator it=ss.begin();
+
+　　ss.erase(it+1);
+
+　　ss.erase(it+1,it+3);
+
+4.替换
+
+　　就是用ss.replace()函数，第一个参数表示从第几个字符开始，第二个参数表示一共替换几个，第三个参数表示换成的字符（串）；
+
+　　ss="abcdefg";
+
+　　ss.replace(2,2,"999");
+
+　　结果ss为ab999efg;
+
+5.查找
+
+　　使用ss.find()函数，查得到则返回第一个下标，查不到返回4294967295
+
+　　ss.find("abc");
+
+6.比较
+
+　　使用ss.compare()函数，ss大则返回1，小返回-1，相等返回0.
+
+　　ss.compare("abc");
+
+　　注：所谓“大”，是指字典序大（在字典中靠后）。
+
+7.反向排序
+
+　　直接reverse(ss.begin(),ss.end());
+
+
+a) =,assign()   //赋以新值
+b) swap()   //交换两个字符串的内容
+c) +=,append(),push_back() //在尾部添加字符
+d) insert() //插入字符
+e) erase() //删除字符
+f) clear() //删除全部字符 
+g) replace() //替换字符
+h) + //串联字符串
+i) ==,!=,<,<=,>,>=,compare()  //比较字符串
+j) size(),length()  //返回字符数量
+k) max_size() //返回字符的可能最大个数
+l) empty()  //判断字符串是否为空
+m) capacity() //返回重新分配之前的字符容量
+n) reserve() //保留一定量内存以容纳一定数量的字符
+o) [ ], at() //存取单一字符
+p) >>,getline() //从stream读取某值
+q) <<  //将谋值写入stream
+r) copy() //将某值赋值为一个C_string
+s) c_str() //将内容以C_string返回
+t) data() //将内容以字符数组形式返回
+u) substr() //返回某个子字符串
+v)查找函数
+w)begin() end() //提供类似STL的迭代器支持
+x) rbegin() rend() //逆向迭代器
+y) get_allocator() //返回配置器
+
+
+
+string 函数列表
+
+函数名	描述
+begin	得到指向字符串开头的Iterator
+end	得到指向字符串结尾的Iterator
+rbegin	得到指向反向字符串开头的Iterator
+rend	得到指向反向字符串结尾的Iterator
+size	得到字符串的大小
+length	和size函数功能相同
+max_size	字符串可能的最大大小
+capacity	在不重新分配内存的情况下，字符串可能的大小
+empty	判断是否为空
+operator[]	取第几个元素，相当于数组
+c_str	取得C风格的const char* 字符串
+data	取得字符串内容地址
+operator=	赋值操作符
+reserve	预留空间
+swap	交换函数
+insert	插入字符
+append	追加字符
+push_back	追加字符
+operator+=	+= 操作符
+erase	删除字符串
+clear	清空字符容器中所有内容
+resize	重新分配空间
+assign	和赋值操作符一样
+replace	替代
+copy	字符串到空间
+find	查找
+rfind	反向查找
+find_first_of	查找包含子串中的任何字符，返回第一个位置
+find_first_not_of	查找不包含子串中的任何字符，返回第一个位置
+find_last_of	查找包含子串中的任何字符，返回最后一个位置
+find_last_not_of	查找不包含子串中的任何字符，返回最后一个位置
+substr	得到字串
+compare	比较字符串
+operator+	字符串链接
+operator==	判断是否相等
+operator!=	判断是否不等于
+operator<</td>	判断是否小于
+operator>>	从输入流中读入字符串
+operator<<	字符串写入输出流
+getline	从输入流中读入一行
