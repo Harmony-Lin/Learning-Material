@@ -6,8 +6,10 @@ Laziness is the first productive force.
 
 ### notice
 
-Please learn all basic grammar of C++(Including variables, operators, functions, structures and STL)
-We will not repeat these things any more.
+We develop different kinds of projects.
 
-All the members must attend the activity.
-If you can not come because of emergency,tell us.
+We are trying to rebuild some classical games on MS-DOS, by using c++; 
+
+we have already finished Mine clearance, Escape pillar and Snake.
+
+you can find the code in lesson branch.
