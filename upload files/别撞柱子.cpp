@@ -1,62 +1,57 @@
+//å¹¿å·å¤–å›½è¯­å­¦æ ¡Lazybonesç¼–ç¨‹ç¤¾å­¦ä¹ èµ„æ–™  è‡ªåˆ¶ç®€æ˜“c++æ¸¸æˆä¹‹ä¸€â€”â€”åˆ«æ’æŸ±å­
 #include<iostream>
-#include<iomanip>
 #include<ctime>
 #include<cstdlib>
-#include<cstdio>
-#include<cstring>
 #include<conio.h>
-
-#define N 4 //¿ØÖÆÍæ¼ÒµÄx×ø±ê 
-
+const int N = 4;//æ§åˆ¶ç©å®¶çš„xåæ ‡ 
 using namespace std;
+char a[40][20];//å‚¨å­˜åœ°å›¾
+double timestart;//å¼€å§‹æ—¶é—´ 
+int d;//éš¾åº¦é€‰æ‹©
+int nowy = 10;//å½“å‰ç©å®¶yåæ ‡ 
+int number = 0;//å±€æ•°
 
-char a[40][20]; 
-double timestart;//¿ªÊ¼Ê±¼ä 
-int d;//ÄÑ¶ÈÑ¡Ôñ
-int nowy=10;//µ±Ç°Íæ¼Òy×ø±ê 
-int number = 0;
-
-struct s {
-	int difficulty;
-	int point;
+struct s {//ç»“æ„ä½“ç”¨äºå‚¨å­˜æ¯ä¸€å±€çš„å¾—åˆ†
+	int difficulty;//è¿™ä¸€å±€çš„éš¾åº¦
+	int point;//è¿™ä¸€å±€çš„åˆ†æ•°
 }player[50];
 
-void build()
+void build()//ç”ŸæˆæŸ±å­
 {
 	srand((unsigned)time(NULL));
 	bool dire = rand() % 2;
-	int l = rand() % 8 + 5;//³¤¶È 
+	int l = rand() % 8 + 8;//é•¿åº¦ 
 
 	if (dire)
 	{
 		for (int i = 0; i < l; i++)
 		{
-			a[39][i] = '|';//Éú³ÉÉÏÖù×Ó
+			a[39][i] = '|';//ç”Ÿæˆä¸ŠæŸ±å­
 		}
 	}
 	else
 	{
 		for (int i = 19; 19 - i < l; i--)
 		{
-			a[39][i] = '|';//Éú³ÉÏÂÖù×Ó 
+			a[39][i] = '|';//ç”Ÿæˆä¸‹æŸ±å­ 
 		}
 	}
 }
 
-void move()
+void move()//ç§»åŠ¨æŸ±å­
 {
 	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 40; j++)
 		{
-			if(a[0][j]=='|')//µ½Í·ÁË 
+			if (a[0][j] == '|')//åˆ°å¤´äº† 
 			{
-				a[0][j]=' ';
+				a[0][j] = ' ';
 			}
-			else if (a[j][i]=='|')
+			else if (a[j][i] == '|')
 			{
-				a[j][i] = ' ';//Çå³ıÔ­À´µÄ
-				a[j-1][i] = '|';//ÏòÇ°ÍÆÒ»¸ö
+				a[j][i] = ' ';//æ¸…é™¤åŸæ¥çš„
+				a[j - 1][i] = '|';//å‘å‰æ¨ä¸€ä¸ª
 			}
 		}
 	}
@@ -65,95 +60,86 @@ void move()
 void flush()
 {
 	system("cls");
-	cout<<"############################################"<<endl;//ÉÏ±ß½ç¿ò 
+	cout << "############################################" << endl;//ä¸Šè¾¹ç•Œæ¡† 
 	for (int i = 0; i < 20; i++)
 	{
-		//cout<<i+10;
-		cout<<"# ";//×ó±ß½ç¿ò 
+		cout << "# ";//å·¦è¾¹ç•Œæ¡† 
 		for (int j = 0; j < 40; j++)
 		{
-			if(j==N&&i==nowy)
+			if (j == N && i == nowy)
 			{
-				cout<<"*";
+				cout << "*";
 			}
 			else
 			{
 				cout << a[j][i];
 			}
 		}
-		cout <<" #"<< endl;//ÓÒ±ß½ç¿ò 
+		cout << " #" << endl;//å³è¾¹ç•Œæ¡† 
 	}
-	cout<<"############################################"<<endl;//ÏÂ±ß½ç¿ò 
+	cout << "############################################" << endl;//ä¸‹è¾¹ç•Œæ¡† 
 	cout << "time:" << " " << time(NULL) - timestart;
 }
 
-
-void score()
+void score()//è¾“å‡ºå¾—åˆ†
 {
 	system("cls");
 	cout << endl << endl << endl;
-	int max=0; 
-	for(int i=1;i<=number;i++)
+	for (int i = 1; i <= number; i++)
 	{
-		cout << "                    " << "µÚ"<<i<<"¾Ö" << endl ;
-		cout << "                        " << "ÄÑ¶È£º"<<player[i].difficulty<<endl; 
-		cout << "                        " << "µÃ·Ö£º"<<player[i].point << endl << endl;
-		max=((player[i].point>max)?player[i].point:max);//±È½Ï×î´óÖµ 
+		cout << "                    " << "ç¬¬" << i << "å±€" << endl;
+		cout << "                        " << "éš¾åº¦ï¼š" << player[i].difficulty << endl;
+		cout << "                       " << "å¾—åˆ†ï¼š" << player[i].point << endl << endl;
 	}
-	cout << "                        " << "×î¸ß·Ö£º"<< max << endl << endl;
+
 	system("pause");
 	system("cls");
 }
 
-void end()
+void end()//å½“ä¸€å±€ç»“æŸæ—¶
 {
 	system("cls");
 	flush();
-	cout<<endl<<"you lose!"<<endl;
-	player[number].point= time(NULL) - timestart;//¶Ô·ÖÊı½øĞĞ¸³Öµ 
+	cout << endl << "you lose!" << endl;
+	nowy = 10;//åˆå§‹åŒ–ç©å®¶ä½ç½®
+	player[number].point = time(NULL) - timestart;//å¯¹åˆ†æ•°è¿›è¡Œèµ‹å€¼ 
 	system("pause");
 	system("cls");
-	score();
+	score();//è¾“å‡ºå¾—åˆ†çš„å‡½æ•°
 	return;
 }
 
-
-
-
-
-void welcome()
+void welcome()//æ¬¢è¿ç•Œé¢çš„è¾“å‡º
 {
-	system("cls");
 	cout << endl << endl << endl;
-	cout <<"                    " << "»¶Ó­½øÈëÓÎÏ·¡°±ğ×²Öù×Ó" << endl<<endl;
-	cout << "                  " << "×÷Õß£º¹ãÍâlazybones±à³ÌÉç¾" << endl << endl;
+	cout << "                    " << "æ¬¢è¿è¿›å…¥æ¸¸æˆâ€œåˆ«æ’æŸ±å­â€" << endl<<endl;
+	cout << "                  " << "ä½œè€…ï¼šå¹¿å¤–lazybonesç¼–ç¨‹ç¤¾" << endl << endl;
 	system("pause");
 	system("cls");
 }
 
-void rule()//Êä³ö¹æÔò²¢ÊäÈëÄÑ¶È 
+void rule()//è¾“å‡ºè§„åˆ™å¹¶è¾“å…¥éš¾åº¦ 
 {
 	system("cls");
 	cout << endl << endl << endl;
-	cout << "                    " << "Çë°´ÉÏ¼üÏòÉÏ,ÏÂ¼üÏòÏÂ,ÓÒ¼üĞüÍ£" << endl << endl;
-	cout << "                        " << "Ê¹·É»ú±Ü¿ªÒÆ¶¯µÄÖù×Ó" << endl << endl;
-	//cout << "                            " << "¿Õ¸ñ¼ü¿ÉÔİÍ£" << endl << endl;
-	cout << "                      " << "ÏÖÔÚ£¬ÇëÊäÈëÄÑ¶È£º1¡ª5" << endl << endl;
-	cout << "                            £º"  ;
+	cout << "                    " << "è¯·æŒ‰ä¸Šé”®å‘ä¸Š,ä¸‹é”®å‘ä¸‹,å³é”®æ‚¬åœ" << endl << endl;
+	cout << "                        " << "ä½¿é£æœºé¿å¼€ç§»åŠ¨çš„æŸ±å­ä»¥åŠä¸Šä¸‹è¾¹ç¼˜" << endl << endl;
+	cout << "                            " << "ç©ºæ ¼é”®å¯æš‚åœ" << endl << endl;
+	cout << "                      " << "ç°åœ¨ï¼Œè¯·è¾“å…¥éš¾åº¦ï¼š1â€”5" << endl << endl;
+	cout << "                            ï¼š";
 	cin >> d;
-	player[number].difficulty = d;//¶Ô½á¹¹ÌåÄÚÄÑ¶È½øĞĞ¸³Öµ
-	d = 100 - d * 15;//¶Ôd½øĞĞËÙ¶È¼ä¸ô´¦Àí£¨Í¨¹ıµ÷ÕûÕâÀïµÄÊıÖµ¿ÉÒÔµ÷ÕûÓÎÏ·ËÙ¶È£© 
+	player[number].difficulty = d;//å¯¹ç»“æ„ä½“å†…éš¾åº¦è¿›è¡Œèµ‹å€¼
+	d = 100 - d * 10;//å¯¹dè¿›è¡Œé€Ÿåº¦é—´éš”å¤„ç†ï¼ˆé€šè¿‡è°ƒæ•´è¿™é‡Œçš„æ•°å€¼å¯ä»¥è°ƒæ•´æ¸¸æˆé€Ÿåº¦ï¼‰ 
 	system("cls");
-	return;
 }
 
-void clean()//Çå¿Õ¶şÎ¬Êı×é 
+void clean()//æ¸…ç©ºäºŒç»´æ•°ç»„ 
 {
 	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 40; j++)
 		{
-			a[j][i]=' ';
+			a[j][i] = ' ';
 		}
 	}
 	return;
@@ -162,83 +148,75 @@ void clean()//Çå¿Õ¶şÎ¬Êı×é
 
 int main()
 {
-	welcome();
-	
+	welcome();//è¾“å‡ºæ¬¢è¿ç•Œé¢
+
 	while (1)
 	{
-		LOOP1://ĞÂÒ»¾ÖµÄ¿ªÊ¼£¬Î¥¹æµØÓÃÁËÒ»¸ögoto 
-		number++;//¾ÖÊı¼ÓÒ» 
-		clean();//½«¶şÎ¬Êı×éÇå¿Õ 
+	LOOP1://æ–°ä¸€å±€çš„å¼€å§‹ï¼Œâ€œè¿è§„â€åœ°ç”¨äº†ä¸€ä¸ªgotoçš„æ ‡ç­¾ 
+		number++;//å±€æ•°åŠ ä¸€ 
+		clean();//å°†äºŒç»´æ•°ç»„æ¸…ç©º 
 		rule();
 		timestart = time(NULL);
-		
-
-		int process=0;
+		int process = 0;//æ§åˆ¶é€Ÿåº¦
+		char key = 0;
 		while (1)
 		{
 			process++;
-			if (process%10 == 0)//Éú³ÉÖù×ÓËÙ¶È¿ØÖÆ 
+			if (process % 15 == 0)//ç”ŸæˆæŸ±å­é€Ÿåº¦æ§åˆ¶ 
 			{
 				build();
 			}
-			
-			move();//ÒÆ¶¯Öù×Ó 
-			
-			
-			bool flag = 1;//ÓÃÀ´¼ì²âÊÇ·ñ°´ÏÂ£¬µ«ÊÇÓÉÓÚ»º³åÇøÎŞ·¨Çå¿ÕµÄÔ­ÒòËÆºõ²¢Ã»ÓĞÊ²Ã´ÓÃ 
-			long int cl = clock();//Õâ¸öÊÇÓÃ¼ì²â¼ì²âÊ±¼äµÄ£¬ÔÚÕâ¶ÎÊ±¼ä£¨dºÁÃëÄÚ£©»áµÈ´ıÓÃ»§µÄÊäÈë£¬ÆäËûÊ±¼äÔòÖ´ĞĞÆäËû´úÂë 
-			while ((flag = (clock() - cl <= d)) && !_kbhit());//Èç¹ûÓĞ¼ü°´ÏÂ»òÊ±¼ä³¬¹ı×Ô¶¯Ç°½øÊ±¼ä¼ä¸ôÔòÖÕÖ¹Ñ­»·
-			
-			char key; 
-			if (flag)
-			{
-				key = _getch();
-			}
-			
-			
-			else
-			{
-				switch(key)
-				{
-					case 80://ÏòÉÏ 
-						if(a[N][nowy+1]==' ')
-						{
-							a[N][nowy]=' ';
-							nowy++;
-							a[N][nowy]='*';
-							break;
-						}
-						else
-						{
-							end();
-							goto LOOP1;
-						}
-					case 72://ÏòÏÂ 
-						if(a[N][nowy-1]==' ')
-						{
-							a[N][nowy]=' ';
-							nowy--;
-							a[N][nowy]='*';
-							break;
-						}
-						else
-						{
-							
-						}
-						break;
-					default://°´ÁËÆäËûµÄ,Í£ÔÚÄÇÀï 
-						if(a[N][nowy]=='|')
-						{
-							end();
-							goto LOOP1;
-						}
-						break;
-				}
-			}
-			
-			flush();//Ë¢ĞÂÆÁÄ»
-		}
 
+			if (process % 2 == 1)//ç§»åŠ¨æŸ±å­é€Ÿåº¦æ§åˆ¶ 
+			{
+				move();
+			}
+			bool flag = 1;//ç”¨æ¥æ£€æµ‹æ˜¯å¦æŒ‰ä¸‹
+			long int cl = clock();//è¿™ä¸ªæ˜¯ç”¨æ£€æµ‹æ£€æµ‹æ—¶é—´çš„ï¼Œåœ¨è¿™æ®µæ—¶é—´ï¼ˆdæ¯«ç§’å†…ï¼‰ä¼šç­‰å¾…ç”¨æˆ·çš„è¾“å…¥ï¼Œå…¶ä»–æ—¶é—´åˆ™æ‰§è¡Œå…¶ä»–ä»£ç  
+			while ((flag = (clock() - cl <= d)) && !_kbhit());//å¦‚æœæœ‰é”®æŒ‰ä¸‹æˆ–æ—¶é—´è¶…è¿‡è‡ªåŠ¨å‰è¿›æ—¶é—´é—´éš”åˆ™ç»ˆæ­¢å¾ªç¯
+
+			if (flag)//å¦‚æœæœ‰æŒ‰é”®
+			{
+				key = _getch();//å¯¹å½“å‰æ–¹å‘è¿›è¡Œé‡æ–°èµ‹å€¼
+			}
+			switch (key)
+			{
+			case 80://å‘ä¸Š 
+				if (a[N][nowy + 1] == ' ' && nowy != 19)
+				{
+					a[N][nowy] = ' ';
+					nowy++;
+					a[N][nowy] = '*';
+					break;
+				}
+				else
+				{
+					end();//ç»“æŸæœ¬å±€ï¼Œè¾“å‡ºå¾—åˆ†
+					goto LOOP1;//è·³å‡ºæ­»å¾ªç¯ï¼Œå¼€å§‹ä¸‹ä¸€å±€
+				}
+			case 72://å‘ä¸‹ 
+				if (a[N][nowy - 1] == ' ' && nowy != 0)
+				{
+					a[N][nowy] = ' ';
+					nowy--;
+					a[N][nowy] = '*';
+					break;
+				}
+				else
+				{
+					end();//ç»“æŸæœ¬å±€ï¼Œè¾“å‡ºå¾—åˆ†
+					goto LOOP1;//è·³å‡ºæ­»å¾ªç¯ï¼Œå¼€å§‹ä¸‹ä¸€å±€
+				}
+				break;
+			default://æŒ‰äº†å…¶ä»–çš„,åœåœ¨é‚£é‡Œ 
+				if (a[N][nowy] == '|')//æ­£é¢æ’ä¸Šäº†
+				{
+					end();//ç»“æŸæœ¬å±€ï¼Œè¾“å‡ºå¾—åˆ†
+					goto LOOP1;//è·³å‡ºæ­»å¾ªç¯ï¼Œå¼€å§‹ä¸‹ä¸€å±€
+				}
+				break;
+			}
+			flush();//åˆ·æ–°å±å¹•
+		}
 	}
-	return 0; 
 }
